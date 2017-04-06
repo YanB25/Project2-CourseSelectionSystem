@@ -5,6 +5,7 @@ using std::endl;
 using std::cerr;
 using std::ifstream;
 using std::ofstream;
+using std::cout;
 
 System::System() {
 	if(!_loadDateFromFile()) {

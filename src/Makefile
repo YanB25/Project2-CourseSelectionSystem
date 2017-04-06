@@ -1,5 +1,5 @@
-object = main.o Course.o Object.o System.o
-header = Course.hpp Person.hpp Object.hpp System.hpp Group.hpp
+object = main.o Course.o Object.o System.o FormatOutput.o
+header = Course.hpp Person.hpp Object.hpp System.hpp Group.hpp FormatOutput.hpp
 CourseSelectionSystem.out : $(object)
 	g++ -g $(object) -o CourseSelectionSystem.out
 	./CourseSelectionSystem.out
@@ -11,6 +11,8 @@ Object.o : Object.cpp Object.hpp
 	g++ -c Object.cpp -std=c++14 -Wall -W
 System.o : System.cpp System.hpp
 	g++ -c System.cpp -std=c++14 -Wall -W
+FormatOutput.o : FormatOutput.cpp FormatOutput.hpp System.hpp Course.hpp
+	g++ -c FormatOutput.cpp -std=c++14 -Wall -W
 .PHONY : clean run
 clean :
 	rm *.out $(object)

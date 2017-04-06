@@ -21,7 +21,9 @@ public:
 	~System();
 	
 	bool hasCourse(const Course& crs) const { return _course_group.isIn(crs); }
+	bool hasCourse(const id_t& crs_id) const { return _course_group.isIn(Course("Unknown", crs_id)); }
 	Course& GetCourse(const id_t& crs_id) { return const_cast<Course&>(*_course_group.find(Course("Unknown", crs_id))); }
+	Course& GetCourse(const Course& crs) { return const_cast<Course&>(*_course_group.find(crs)); }
 	
 	bool joinStuToCourse(const Student& stu, Course& crs) { return _course_group.isIn(crs) && crs.addStudent(stu); }
 	bool joinTeaToCourse(const Teacher& tea, Course& crs) { return _course_group.isIn(crs) && crs.addTeacher(tea); }
