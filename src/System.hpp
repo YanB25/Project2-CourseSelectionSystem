@@ -16,7 +16,6 @@ public:
 	typedef string id_t;
 	typedef string filename_t;
 	
-	//TODO:important:构造函数和析构函数需要完成文件IO的工作。
 	System();
 	System(const System&) = delete;
 	~System();
@@ -33,8 +32,7 @@ public:
 	
 	bool addCourse(const Course& crs) { return _course_group.insert(crs); }
 	bool removeCourse(const Course& crs) { return _course_group.erase(crs); }
-	//TODO:not finished
-	
+	const auto& GetCourse() const { return _course_group.GetData(); }
 private:
 	course_group_t _course_group;
 	bool _saveDataToFile(const filename_t& fn = filename);
