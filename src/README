@@ -1,0 +1,9 @@
+在Linux下 命令行输入
+>>> make
+再输入
+>>> ./CourseSelectionSystem.out
+(或输入 >>> make run 运行本系统）
+即可运行系统
+需要支持 C++14
+
+运行后输入help查看帮助

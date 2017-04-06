@@ -11,6 +11,8 @@ Object.o : Object.cpp Object.hpp
 	g++ -c Object.cpp -std=c++14 -Wall -W
 System.o : System.cpp System.hpp
 	g++ -c System.cpp -std=c++14 -Wall -W
-.PHONY : clean
+.PHONY : clean run
 clean :
 	rm *.out $(object)
+run :
+	./CourseSelectionSystem.out
