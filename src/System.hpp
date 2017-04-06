@@ -8,17 +8,18 @@
 using std::set;
 using std::string;
 
+const string filename("../data/CourseDateInSystem");
 class System {
 public:
 	typedef Group<Course> course_group_t;
 	typedef System self;
 	typedef string id_t;
+	typedef string filename_t;
 	
 	//TODO:important:构造函数和析构函数需要完成文件IO的工作。
-	//TODO:start here
-	System() = default;
+	System();
 	System(const System&) = delete;
-	~System() = default;
+	~System();
 	
 	bool hasCourse(const Course& crs) const { return _course_group.isIn(crs); }
 	Course& GetCourse(const id_t& crs_id) { return const_cast<Course&>(*_course_group.find(Course("Unknown", crs_id))); }
@@ -36,5 +37,7 @@ public:
 	
 private:
 	course_group_t _course_group;
+	bool _saveDataToFile(const filename_t& fn = filename);
+	bool _loadDateFromFile(const filename_t& fn = filename);
 };
 #endif

@@ -39,6 +39,11 @@ public:
 	size_t getMaxStu() const { return _max_stu; }
 	bool setMaxTea(size_t new_tea);
 	size_t getMaxTea() const { return _max_tea; }
+	size_t getStuNum() const { return _stu_group.size(); }
+	size_t getTeaNum() const { return _tea_group.size(); }
+	
+	auto& getStuData() const { return _stu_group.GetData(); }
+	auto& getTeaData() const { return _tea_group.GetData(); }
 private:
 	stu_group_t _stu_group;
 	tea_group_t _tea_group;

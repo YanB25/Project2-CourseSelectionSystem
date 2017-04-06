@@ -31,6 +31,9 @@ public:
 	
 	size_t size() const { return _group.size(); }
 	bool empty() const { return _group.empty(); }
+	
+	group_t& GetData() { return _group; }
+	const group_t& GetData() const { return _group; }
 private:
 	group_t _group;
 };
