@@ -13,7 +13,6 @@ public:
 	typedef typename group_t::const_iterator const_iter;
 	
 	Group() = default;
-	Group(const Group& rhs) = delete;
 	~Group() = default;
 	
 	bool insert(const T& item) { return _group.insert(item).second; }

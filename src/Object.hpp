@@ -31,5 +31,5 @@ private:
 	name_t _name;
 	id_t _id;
 };
-Object::~Object() { }
+
 #endif
