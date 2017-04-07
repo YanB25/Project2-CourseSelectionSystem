@@ -8,13 +8,11 @@ github: YanB25
 #include "Course.hpp"
 #include "Person.hpp"
 #include "System.hpp"
-#include "FormatOutput.hpp"
+#include "IOHelper.hpp"
 #include <string>
 #include <iostream>
 #include <iomanip>
 #include <string>
-#include <vector>
-#include <algorithm>
 #include <regex>
 #include <sstream>
 using std::string;
@@ -22,42 +20,24 @@ using std::cin;
 using std::cout;
 using std::endl;
 using std::ostream;
-using std::vector;
-using std::find;
 using std::istringstream;
 using std::regex;
 using std::smatch;
 
+const string Pattern("^help|quit|prta|(add|rm|prt) (stu|tea|crs)$");
 
-template <typename T>
-T InputNameAndId(const string& s = "") {
-	string name, id;
-	cout << s + " Name: " << endl;
-	PrintPromtForInput();
-	getline(cin, name);
-	cout << s + " Id: " << endl;
-	PrintPromtForInput();
-	getline(cin, id);
-	T ret(name, id);
-	return ret;
-}
+const string SYNTAX_ERROR("Syntax Error: invalid order. use <help> to get help");
 
-template <typename T>
-T InputId(const string& s = "") {
-	string id;
-	cout << s + " Id: " << endl;
-	PrintPromtForInput();
-	getline(cin, id);
-	return T("Unknown", id);
-}
-
-Course InputCourseById() {
-	string crs_id;
-	cout << "Course Id: " << endl;
-	PrintPromtForInput();
-	getline(cin, crs_id);
-	return Course("Unknown", crs_id);
-}
+const string FAIL_TO("Runtime Error: Fail to ");
+const string FAIL_TO_REMOVE = FAIL_TO + "Remove ";
+const string FAIL_TO_ADD = FAIL_TO + "Add ";
+const string FAIL_TO_FIND_COURSE = FAIL_TO + "Find This Course";
+const string FAIL_TO_REMOVE_STUDENT = FAIL_TO_REMOVE + "Student";
+const string FAIL_TO_REMOVE_TEACHER = FAIL_TO_REMOVE + "Teacher";
+const string FAIL_TO_REMOVE_COURSE = FAIL_TO_REMOVE + "Course";
+const string FAIL_TO_ADD_STUDENT = FAIL_TO_ADD + "Student";
+const string FAIL_TO_ADD_TEACHER = FAIL_TO_ADD + "Teacher";
+const string FAIL_TO_ADD_Course = FAIL_TO_ADD + "Course";
 
 int main() {
 	System sys; //the system
@@ -69,10 +49,9 @@ int main() {
 	string name;
 	string id;
 	string crs_id;
-//	//regex
-//	regex checkOrder(OrderPattern);
-//	regex checkAll(validPattern);
-//	smatch results;
+	//regex
+	regex checkValidInput(Pattern);
+	smatch results;
 	
 	while (true) {
 		PrintPromt(); //print ">>> "
@@ -82,26 +61,19 @@ int main() {
 			continue;
 		}
 		
-		//get input, order and name
 		getline(cin, input);
 		istringstream sin(input);
 		sin >> first_order;
 		//discard spaces
 		while (sin.peek() == ' ') sin.get();
-//		getline(sin, name);
 		
 		//check the syntax
-//		if (!regex_search(input, results, checkOrder)) {
-//			//print a caret to indicate where the error happened
-//			//it is like "     ^"
-//			PrintError(cout, "Syntax Error: invalid order. use <help> to get help");
-//			continue;
-//		} else if (!regex_search(input, results, checkAll)) {
-//			PrintErrorLocation(cout, order.length() + 5);
-//			PrintError(cout, "Syntax Error: invalid parameter, please check both number and format");
-//			continue;
-//		} 
+		if (!regex_search(input, results, checkValidInput)) {
+			PrintError(SYNTAX_ERROR);
+			continue;
+		}
 		
+				
 		//work
 		if (first_order == "quit") {
 			return 0;
@@ -120,23 +92,23 @@ int main() {
 				if (second_order == "crs") {
 					Course c = InputNameAndId<Course>("Course");
 					if (!sys.addCourse(c)) {
-						PrintError("RunTime Error: Fail to add this course");
+						PrintError(FAIL_TO_FIND_COURSE);
 						continue;
 					}
 				} else {
 					Person p = InputNameAndId<Person>("Person");
 					Course crs = InputCourseById();
 					if (!sys.hasCourse(crs.GetId())) {
-						PrintError("RunTime Error: can not find this course");
+						PrintError(FAIL_TO_FIND_COURSE);
 					}
 					auto& course = sys.GetCourse(crs);
 					if (second_order == "stu") {
 						if (!sys.joinStuToCourse(Student(p), course)) {
-							PrintError("RunTime Error: can not join this student");
+							PrintError(FAIL_TO_ADD_STUDENT);
 						}
 					} else {
 						if (!sys.joinTeaToCourse(Teacher(p), course)) {
-							PrintError("RunTime Error: can not join this teacher");
+							PrintError(FAIL_TO_ADD_TEACHER);
 						}
 					}
 				}
@@ -144,26 +116,26 @@ int main() {
 				if (second_order == "crs") {
 					Course crs = InputCourseById();
 					if (!sys.hasCourse(crs.GetId())) {
-						PrintError("RuntTime Error: can not find the course");
+						PrintError(FAIL_TO_FIND_COURSE);
 					}
 					auto& course = sys.GetCourse(crs);
 					if (!sys.removeCourse(course)) {
-						PrintError("RuntTime Error: cannot remove course");
+						PrintError(FAIL_TO_REMOVE_COURSE);
 					}
 				} else {
 					Person p = InputId<Person>("Person");
 					Course crs = InputCourseById();
 					if (!sys.hasCourse(crs.GetId())) {
-						PrintError("RunTime Error: can not find the course");
+						PrintError(FAIL_TO_FIND_COURSE);
 					}
 					auto& course = sys.GetCourse(crs);
 					if (second_order == "stu") {
 						if (!sys.removeStuFromCourse(Student(p), course)) {
-							PrintError("RunTime Error: can not remove student");
+							PrintError(FAIL_TO_REMOVE_STUDENT);
 						}
 					} else {
 						if (!sys.removeTeaFromCourse(Teacher(p), course)) {
-							PrintError("RunTime Error: can not remove teacher");
+							PrintError(FAIL_TO_REMOVE_TEACHER);
 						}
 					}
 				}
@@ -171,11 +143,19 @@ int main() {
 				if (second_order == "crs") {
 					Course crs = InputCourseById();
 					if (!sys.hasCourse(crs.GetId())) {
-						PrintError("RunTimeError: cannot find this course");
+						PrintError(FAIL_TO_FIND_COURSE);
 					}
-					PrintCourse(sys.GetCourse(crs));
-				}
-			
+					else {
+						PrintCourse(sys.GetCourse(crs));
+					}
+				} else {
+					Person p = InputId<Person>("Person");
+					if (second_order == "stu") {
+						PrintHisCourse(sys, Student(p));
+					} else {
+						PrintHisCourse(sys, Teacher(p));
+					}
+				}	
 			}
 		}
 	}
