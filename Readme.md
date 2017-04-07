@@ -8,6 +8,7 @@
 	直接运行`/bin/CourseSelectionSystem.exe` 即可打开系统，并根据提示进行操作
 	- Linux:
 	在`/src`并目录下输入`make`指令后输入`./CourseSelectionSystem.out`即可打开系统
+	[this file](../data/CourseSelectionSystem)
 运行后输入`help`可查看帮助
 
 2. 各个文件的包含关系：
