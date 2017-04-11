@@ -2,7 +2,6 @@ object = main.o Course.o Object.o System.o IOHelper.o
 header = Course.hpp Person.hpp Object.hpp System.hpp Group.hpp IOHelper.hpp
 CourseSelectionSystem.out : $(object) $(header)
 	g++ -g $(object) -o CourseSelectionSystem.out
-	./CourseSelectionSystem.out
 main.o : $(header)
 	g++ -c main.cpp -std=c++14 -Wall -W
 Course.o : Course.cpp Course.hpp
