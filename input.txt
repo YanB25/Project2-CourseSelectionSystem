@@ -1,0 +1,39 @@
+Case1:
+help
+quit
+
+Case2:
+prta
+quit
+
+Case3:
+prt crs
+001
+quit
+
+Case4:
+add stu
+WangXihuai
+16335296
+001
+prt crs
+001
+quit
+
+Case5:
+rm stu
+16335296
+001
+quit
+
+Case6:
+rm stu
+10125214
+001
+quit
+
+Case7:
+add
+add add add
+jsldfjs
+quit
