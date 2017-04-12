@@ -15,15 +15,17 @@ public:
 	Group() = default;
 	~Group() = default;
 	
+	//return if insert is necessary
 	bool insert(const T& item) { return _group.insert(item).second; }
 	bool erase(const T& item) {
 		if (find(item) == _group.end()) return false;
 		_group.erase(item);
 		return true;
 	}
-	//TODO:maybe bug: should I add const here? what will happen?
+
 	iter find(const T& item) { return _group.find(item); }
 	const_iter find(const T& item) const { return _group.find(item); }
+	//if item is in _group return true, else return false
 	bool isIn(const T& item) const { return _group.find(item) != _group.end(); }
 	void clear() { _group.clear(); }
 	//it can only return 1 or 0 because items in <set> are unique

@@ -1,5 +1,5 @@
 #include "Course.hpp"
-
+//see Course.hpp
 bool Course::setMaxStu(size_t num) {
 	if (num <= 0) {
 		return false;

@@ -23,11 +23,12 @@ using std::ostream;
 using std::istringstream;
 using std::regex;
 using std::smatch;
-
+//pattern for RegEx
 const string Pattern("^help|quit|prta|(add|rm|prt) (stu|tea|crs)$");
 
 const string SYNTAX_ERROR("Syntax Error: invalid order. use <help> to get help");
 
+//some output information
 const string FAIL_TO("Runtime Error: Fail to ");
 const string FAIL_TO_REMOVE = FAIL_TO + "Remove ";
 const string FAIL_TO_ADD = FAIL_TO + "Add ";
@@ -88,6 +89,7 @@ int main() {
 		}
 		else {
 			sin >> second_order;
+			//about add
 			if (first_order == "add") {
 				if (second_order == "crs") {
 					Course c = InputNameAndId<Course>("Course");
@@ -112,7 +114,9 @@ int main() {
 						}
 					}
 				}
-			} else if (first_order == "rm") {
+			} 
+			//about remove
+			else if (first_order == "rm") {
 				if (second_order == "crs") {
 					Course crs = InputCourseById();
 					if (!sys.hasCourse(crs.GetId())) {
@@ -139,7 +143,9 @@ int main() {
 						}
 					}
 				}
-			} else if (first_order == "prt") {
+			} 
+			// about print
+			else if (first_order == "prt") {
 				if (second_order == "crs") {
 					Course crs = InputCourseById();
 					if (!sys.hasCourse(crs.GetId())) {

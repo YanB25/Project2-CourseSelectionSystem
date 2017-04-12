@@ -6,20 +6,20 @@ using std::cerr;
 using std::ifstream;
 using std::ofstream;
 using std::cout;
-
+//load data in constructor
 System::System() {
 	if(!_loadDateFromFile()) {
 		cerr << "Warning: an Error Happened When System is Loading Data" << endl;
 	}
 }
-
+//save data in destructor
 System::~System() {
 	if (!_saveDataToFile()) {
 		cerr << "Warning: an Error Happened When System is Saving Data" << endl;
 	}
 }
 
-//TODO: maybe bug please double check this code
+
 bool System::_loadDateFromFile(const filename_t& fn) {
 	ifstream fin(fn);
 	int numOfCourse;

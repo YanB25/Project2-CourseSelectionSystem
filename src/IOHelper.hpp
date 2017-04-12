@@ -78,7 +78,7 @@ T InputId(const string& s) {
 }
 
 Course InputCourseById();
-
+//input a person and print his course
 void PrintHisCourse(const System& sys, const Teacher& tea);
 void PrintHisCourse(const System& sys, const Student& stu);
 
