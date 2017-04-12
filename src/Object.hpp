@@ -17,6 +17,7 @@ public:
 	Object(name_t name, id_t id) : _name(name), _id(id) { }
 	virtual ~Object() = 0;
 	
+	//use _id to cmp
 	bool operator<(const self& rhs) const { return _id < rhs._id; }
 	bool operator>(const self& rhs) const { return _id > rhs._id; }
 	bool operator==(const self& rhs) const { return _id == rhs._id; }
